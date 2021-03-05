@@ -3,6 +3,7 @@ version: "3.1"
 services:
   server:
     container_name: polis-server
+    restart: unless-stopped
     env_file: ./docker-server.env
     image: polis/server:prod
     build:
@@ -16,6 +17,7 @@ services:
 
   math:
     container_name: polis-math
+    restart: unless-stopped
     env_file: ./docker-math.env
     image: polis/math:prod
     build:
@@ -25,6 +27,7 @@ services:
 
   file-server:
     container_name: polis-file-server
+    restart: unless-stopped
     image: polis/file-server:prod
     build:
       context: ../file-server
@@ -64,6 +67,7 @@ services:
         GIT_HASH: "${GIT_HASH}"
 
   maildev:
+    restart: unless-stopped
     image: maildev/maildev:1.1.0
     networks:
       - "polis"
