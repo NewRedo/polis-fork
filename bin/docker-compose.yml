@@ -8,7 +8,6 @@ services:
     build:
       context: ../server
     depends_on:
-      - "postgres"
       - "file-server"
     networks:
       - "polis"
@@ -19,26 +18,10 @@ services:
     container_name: polis-math
     env_file: ./docker-math.env
     image: polis/math:prod
-    depends_on:
-      - "postgres"
     build:
       context: ../math
     networks:
       - "polis"
-
-  postgres:
-    container_name: polis-postgres
-    env_file: ./docker-db.env
-    image: polis/postgres:prod
-    restart: always
-    build:
-      context: ../server
-      dockerfile: Dockerfile-db
-    networks:
-      - "polis"
-    volumes:
-      - "backups:/backups"
-      - "postgres:/var/lib/postgresql/data"
 
   file-server:
     container_name: polis-file-server
@@ -92,7 +75,3 @@ services:
 
 networks:
   polis:
-
-volumes:
-  backups:
-  postgres:
